@@ -1,28 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
 :root {
   --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-
-  /* Dark theme (default) */
-  --bg-deep: #050510;
-  --bg-card: rgba(15, 18, 35, 0.85);
-  --bg-input: rgba(10, 12, 25, 0.9);
+  --bg-deep: #04040f;
+  --bg-card: rgba(13,16,33,0.88);
+  --bg-input: rgba(8,10,22,0.92);
   --bg-hover: rgba(255,255,255,0.04);
   --border: rgba(255,255,255,0.08);
-  --border-focus: #6366f1;
+  --border-hover: rgba(255,255,255,0.16);
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-dim: #64748b;
   --accent: #6366f1;
+  --accent-light: #818cf8;
   --accent-glow: rgba(99,102,241,0.35);
   --teal: #14b8a6;
   --teal-glow: rgba(20,184,166,0.3);
   --rose: #f43f5e;
   --rose-glow: rgba(244,63,94,0.3);
   --amber: #f59e0b;
+  --amber-glow: rgba(245,158,11,0.3);
+  --emerald: #10b981;
+  --purple: #a855f7;
+  --sky: #38bdf8;
   --success: #22c55e;
   --chart-min: #60a5fa;
   --chart-med: #34d399;
@@ -30,22 +33,26 @@
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
+  --radius-xl: 28px;
   --radius-full: 999px;
-  --shadow: 0 8px 32px rgba(0,0,0,0.4);
-  --backdrop: blur(16px);
+  --shadow: 0 8px 40px rgba(0,0,0,0.5);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.6);
+  --backdrop: blur(20px);
   --transition: 0.25s cubic-bezier(0.16,1,0.3,1);
 }
 
 [data-theme="light"] {
-  --bg-deep: #f0f2f5;
-  --bg-card: rgba(255,255,255,0.85);
-  --bg-input: rgba(240,242,245,0.95);
+  --bg-deep: #f0f2f8;
+  --bg-card: rgba(255,255,255,0.88);
+  --bg-input: rgba(238,240,248,0.95);
   --bg-hover: rgba(0,0,0,0.03);
-  --border: rgba(0,0,0,0.1);
+  --border: rgba(0,0,0,0.09);
+  --border-hover: rgba(0,0,0,0.18);
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-dim: #94a3b8;
-  --shadow: 0 8px 32px rgba(0,0,0,0.08);
+  --shadow: 0 8px 40px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
 }
 
 body {
@@ -57,11 +64,10 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
-/* ─── Ambient background ─── */
 body::before, body::after {
-  content:'';position:fixed;border-radius:50%;filter:blur(120px);z-index:-1;opacity:0.12;
-  animation: drift 12s ease-in-out infinite alternate;pointer-events:none;
+  content:'';position:fixed;border-radius:50%;filter:blur(130px);z-index:-1;opacity:0.11;
+  animation: drift 14s ease-in-out infinite alternate;pointer-events:none;
 }
-body::before{width:50vw;height:50vh;background:var(--accent);top:-10%;left:-10%}
-body::after{width:40vw;height:40vh;background:var(--teal);bottom:-10%;right:-10%;animation-delay:-6s}
-@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,25px) scale(1.08)}}
+body::before{width:55vw;height:55vh;background:var(--accent);top:-15%;left:-15%}
+body::after{width:45vw;height:45vh;background:var(--teal);bottom:-15%;right:-15%;animation-delay:-7s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(45px,28px) scale(1.1)}}
