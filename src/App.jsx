@@ -5,6 +5,8 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   LineChart, Line, CartesianGrid
 } from "recharts";
+import LandingPage from "./LandingPage";
+import FooterDetailPage from "./FooterDetailPage";
 import "./App.css";
 
 /* ═══════════════════════════════════════════════════
@@ -550,6 +552,8 @@ const INDUSTRY_ICONS = {
    ═══════════════════════════════════════════════════ */
 function App() {
   const { theme, toggle } = useTheme();
+  const [view, setView] = useState("landing");
+  const [footerPageKey, setFooterPageKey] = useState("skill-analyzer");
 
   const [industry, setIndustry] = useState("");
   const [specialization, setSpecialization] = useState("");
@@ -584,6 +588,26 @@ function App() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  };
+
+  const openFooterDetailPage = (pageKey) => {
+    setFooterPageKey(pageKey);
+    setView("footer-detail");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goToLanding = (sectionId = null) => {
+    setView("landing");
+    setTimeout(() => {
+      if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
   };
 
   const validate = () => {
@@ -650,13 +674,36 @@ function App() {
   const SECTIONS = ["overview", "skills", "chart", "roadmap", "trends"];
   const SECTION_LABELS = { overview: "📊 Overview", skills: "🎯 Skills", chart: "💰 Salary", roadmap: "🗺️ Roadmap", trends: "📡 Trends" };
 
+  if (view === "landing") {
+    return (
+      <LandingPage
+        onGetStarted={() => setView("app")}
+        onOpenFooterPage={openFooterDetailPage}
+        theme={theme}
+        toggleTheme={toggle}
+      />
+    );
+  }
+
+  if (view === "footer-detail") {
+    return (
+      <FooterDetailPage
+        pageKey={footerPageKey}
+        onBack={() => goToLanding("contact")}
+        onGetStarted={() => setView("app")}
+        theme={theme}
+        toggleTheme={toggle}
+      />
+    );
+  }
+
   return (
     <div className="app">
       {/* ─── Header ─── */}
       <header className="header">
-        <div className="header-logo">
+        <div className="header-logo" style={{ cursor: "pointer" }} onClick={() => goToLanding()}>
           <span className="logo-icon">⚡</span>
-          Skill<span className="gradient-text">Suggester</span>
+          <span className="gradient-text">Zync</span>
         </div>
         <nav className="header-nav">
           {result && SECTIONS.map(s => (
