@@ -9,6 +9,11 @@ import LandingPage from "./LandingPage";
 import FooterDetailPage from "./FooterDetailPage";
 import "./App.css";
 
+const API_BASE_URL = (process.env.VITE_API_BASE_URL || process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
+const api = axios.create({
+  baseURL: API_BASE_URL || undefined,
+});
+
 /* ═══════════════════════════════════════════════════
    THEME HOOK
    ═══════════════════════════════════════════════════ */
@@ -79,7 +84,7 @@ function SkillInput({ chips, setChips }) {
 
   const fetchSuggestions = useCallback((q) => {
     if (!q.trim()) { setSuggestions([]); return; }
-    axios.get(`/api/skills/search?q=${encodeURIComponent(q)}`)
+    api.get(`/api/skills/search?q=${encodeURIComponent(q)}`)
       .then(r => {
         const chipSet = new Set(chips.map(c => c.toLowerCase()));
         const normalized = (r.data || []).map(normalizeSuggestion).filter(Boolean)
@@ -431,13 +436,13 @@ function HistoryPanel({ onLoad }) {
   const [tab, setTab] = useState("list");
 
   const fetchHistory = () => {
-    axios.get("/api/history").then(r => { setHistory(r.data || []); });
-    axios.get("/api/history/stats").then(r => { setStats(r.data); });
+    api.get("/api/history").then(r => { setHistory(r.data || []); });
+    api.get("/api/history/stats").then(r => { setStats(r.data); });
   };
 
   const clearHistory = () => {
     if (!window.confirm("Clear all analysis history?")) return;
-    axios.delete("/api/history").then(() => { setHistory([]); setStats(null); });
+    api.delete("/api/history").then(() => { setHistory([]); setStats(null); });
   };
 
   const toggleOpen = () => {
@@ -623,7 +628,7 @@ function App() {
     if (!validate()) return;
     setError(""); setResult(null); setLoading(true);
     try {
-      const res = await axios.post("/api/analyze", {
+      const res = await api.post("/api/analyze", {
         industry, specialization,
         skills: skillChips.join(", "),
         experience: experience || "0",

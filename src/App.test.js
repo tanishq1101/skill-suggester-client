@@ -3,7 +3,16 @@ import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import App from "./App.jsx";
 
-jest.mock("axios");
+jest.mock("axios", () => {
+  const mockAxios = {
+    create: jest.fn(),
+    get: jest.fn(),
+    post: jest.fn(),
+    delete: jest.fn(),
+  };
+  mockAxios.create.mockReturnValue(mockAxios);
+  return mockAxios;
+});
 
 // Mock recharts to avoid canvas/DOM issues in JSDOM
 jest.mock("recharts", () => ({
